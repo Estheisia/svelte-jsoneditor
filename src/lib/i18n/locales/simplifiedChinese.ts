@@ -41,6 +41,8 @@ export const simplifiedChinese: Language = {
     wizardInfo: '仅对数组有效，对对象无效',
     query: '查询',
     docRoot: '文档根节点',
+    itemRoot: '项根节点',
+    pleaseSelect: '请选择',
 
     // TreeMode messages
     invalidJsonNotRepairable: '加载的JSON文档无效，无法自动修复。',

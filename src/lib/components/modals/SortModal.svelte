@@ -26,7 +26,7 @@
   $: selectedJson = getIn(json, rootPath)
   $: jsonIsArray = Array.isArray(selectedJson)
   $: paths = jsonIsArray ? getNestedPaths(selectedJson) : undefined
-  $: properties = paths ? paths.map(pathToOption) : undefined
+  $: properties = paths ? paths.map((path) => pathToOption(path, $t('itemRoot'))) : undefined
 
   const asc = {
     value: 1,
@@ -104,7 +104,12 @@
           <tr>
             <th>{$t('property')}</th>
             <td>
-              <Select showChevron items={properties} bind:value={selectedProperty} />
+              <Select
+                showChevron
+                placeholder={$t('pleaseSelect')}
+                items={properties}
+                bind:value={selectedProperty}
+              />
             </td>
           </tr>
         {/if}

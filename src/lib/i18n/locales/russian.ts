@@ -44,6 +44,8 @@ export const russian: Language = {
     language: 'Язык',
     query: 'Запрос',
     docRoot: 'Корень документа',
+    itemRoot: 'корень элемента',
+    pleaseSelect: 'Выберите',
 
     // TreeMode messages
     invalidJsonNotRepairable:
@@ -190,7 +192,7 @@ export const russian: Language = {
     selectedPath: 'Выбранный путь',
     direction: 'Направление',
     property: 'Свойство',
-    wizard: 'Wizard',
+    wizard: 'Мастер',
     wizardInfo: 'Доступно только для массивов, не для объектов',
     original: 'Текущий',
     preview: 'Предпросмотр',

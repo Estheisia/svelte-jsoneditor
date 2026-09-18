@@ -78,7 +78,9 @@
       <div class="jse-nested-property">
         <div class="jse-nested-property-path">
           "{stringifyJSONPath(nestedArrayPath)}"
-          <span class="jse-nested-property-count">({count} {count !== 1 ? 'items' : 'item'})</span>
+          <span class="jse-nested-property-count"
+            >({count} {count !== 1 ? $t('items') : $t('item')})</span
+          >
         </div>
 
         <button

@@ -861,6 +861,8 @@ export type TranslationKey = {
   language: string
   query: string
   docRoot: string
+  itemRoot: string
+  pleaseSelect: string
 
   // textMode
   cancel: string

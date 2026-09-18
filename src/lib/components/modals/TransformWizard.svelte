@@ -21,8 +21,10 @@
   $: jsonIsArray = Array.isArray(json)
   $: paths = jsonIsArray ? getNestedPaths(json) : []
   $: pathsIncludingObjects = jsonIsArray ? getNestedPaths(json, true) : []
-  $: fieldOptions = paths.map(pathToOption)
-  $: projectionOptions = pathsIncludingObjects ? pathsIncludingObjects.map(pathToOption) : []
+  $: fieldOptions = paths.map((path) => pathToOption(path, $t('itemRoot')))
+  $: projectionOptions = pathsIncludingObjects
+    ? pathsIncludingObjects.map((path) => pathToOption(path, $t('itemRoot')))
+    : []
 
   const filterRelationOptions = ['==', '!=', '<', '<=', '>', '>='].map((relation) => ({
     value: relation,
@@ -35,12 +37,16 @@
   ]
 
   // TODO: the binding with the select boxes is very cumbersome. Can we simplify this?
-  let filterPath = queryOptions?.filter?.path ? pathToOption(queryOptions.filter.path) : undefined
+  let filterPath = queryOptions?.filter?.path
+    ? pathToOption(queryOptions.filter.path, $t('itemRoot'))
+    : undefined
   let filterRelation =
     filterRelationOptions.find((option) => option.value === queryOptions.filter?.relation) ??
     filterRelationOptions[0]
   let filterValue = queryOptions?.filter?.value || ''
-  let sortPath = queryOptions?.sort?.path ? pathToOption(queryOptions.sort.path) : undefined
+  let sortPath = queryOptions?.sort?.path
+    ? pathToOption(queryOptions.sort.path, $t('itemRoot'))
+    : undefined
   let sortDirection =
     sortDirectionOptions.find((option) => option.value === queryOptions.sort?.direction) ??
     sortDirectionOptions[0]
@@ -117,6 +123,7 @@
           <Select
             class="jse-filter-path"
             showChevron
+            placeholder={$t('pleaseSelect')}
             items={fieldOptions}
             bind:value={filterPath}
           />
@@ -135,7 +142,13 @@
       <th>{$t('sort')}</th>
       <td>
         <div class="jse-horizontal">
-          <Select class="jse-sort-path" showChevron items={fieldOptions} bind:value={sortPath} />
+          <Select
+            class="jse-sort-path"
+            showChevron
+            placeholder={$t('pleaseSelect')}
+            items={fieldOptions}
+            bind:value={sortPath}
+          />
           <Select
             class="jse-sort-direction"
             showChevron
@@ -154,6 +167,7 @@
             class="jse-projection-paths"
             multiple
             showChevron
+            placeholder={$t('pleaseSelect')}
             items={projectionOptions}
             bind:value={projectionPaths}
           />

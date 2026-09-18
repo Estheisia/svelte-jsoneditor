@@ -42,6 +42,8 @@ export const english: Language = {
     wizardInfo: 'Only available for arrays, not for objects',
     query: 'Query',
     docRoot: 'document root',
+    itemRoot: 'item root',
+    pleaseSelect: 'Please select',
 
     // TreeMode messages
     invalidJsonNotRepairable:

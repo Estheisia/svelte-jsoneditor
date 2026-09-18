@@ -43,6 +43,8 @@ export const french: Language = {
     wizardInfo: 'Disponible uniquement pour les tableaux, pas pour les objets',
     query: 'Requête',
     docRoot: 'racine du document',
+    itemRoot: "racine de l'élément",
+    pleaseSelect: 'Veuillez sélectionner',
 
     // TreeMode messages
     invalidJsonNotRepairable:
