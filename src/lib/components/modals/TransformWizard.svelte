@@ -31,7 +31,7 @@
     label: relation
   }))
 
-  const sortDirectionOptions = [
+  $: sortDirectionOptions = [
     { value: 'asc', label: $t('sortAscending') },
     { value: 'desc', label: $t('sortDescending') }
   ]
@@ -47,8 +47,11 @@
   let sortPath = queryOptions?.sort?.path
     ? pathToOption(queryOptions.sort.path, $t('itemRoot'))
     : undefined
-  let sortDirection =
-    sortDirectionOptions.find((option) => option.value === queryOptions.sort?.direction) ??
+  // the sort direction is kept as a plain value and not as the option of the
+  // select box, so that the labels of the options follow the language
+  let sortDirectionValue = queryOptions.sort?.direction ?? 'asc'
+  $: sortDirection =
+    sortDirectionOptions.find((option) => option.value === sortDirectionValue) ??
     sortDirectionOptions[0]
 
   $: projectionPaths =
@@ -154,7 +157,8 @@
             showChevron
             clearable={false}
             items={sortDirectionOptions}
-            bind:value={sortDirection}
+            value={sortDirection}
+            on:input={(event) => (sortDirectionValue = event.detail?.value)}
           />
         </div>
       </td>

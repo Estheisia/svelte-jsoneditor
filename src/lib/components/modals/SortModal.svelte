@@ -1,7 +1,7 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import { isEmpty } from 'lodash-es'
+  import { isEmpty, isEqual } from 'lodash-es'
   import Select from 'svelte-select'
   import Header from './Header.svelte'
   import { getNestedPaths } from '$lib/utils/arrayUtils.js'
@@ -28,27 +28,29 @@
   $: paths = jsonIsArray ? getNestedPaths(selectedJson) : undefined
   $: properties = paths ? paths.map((path) => pathToOption(path, $t('itemRoot'))) : undefined
 
-  const asc = {
-    value: 1,
-    label: $t('sortAscending')
-  }
-  const desc = {
-    value: -1,
-    label: $t('sortDescending')
-  }
-  const directions = [asc, desc]
+  $: directions = [
+    { value: 1 as const, label: $t('sortAscending') },
+    { value: -1 as const, label: $t('sortDescending') }
+  ]
 
   const stateId = `${id}:${compileJSONPointer(rootPath)}`
-  let selectedProperty = sortModalStates[stateId]?.selectedProperty
-  let selectedDirection = sortModalStates[stateId]?.selectedDirection || asc
+
+  // the selected values are kept as plain values and not as the options of the
+  // select boxes, so that the labels of the options follow the language
+  let selectedPath: JSONPath | undefined = sortModalStates[stateId]?.selectedPath
+  let selectedDirectionValue: 1 | -1 = sortModalStates[stateId]?.selectedDirection ?? 1
   let sortError: string | undefined = undefined
+
+  $: selectedProperty = properties?.find((option) => isEqual(option.value, selectedPath))
+  $: selectedDirection =
+    directions.find((option) => option.value === selectedDirectionValue) ?? directions[0]
 
   $: {
     // remember the selected values for the next time we open the SortModal
     // just in memory, not persisted
     sortModalStates[stateId] = {
-      selectedProperty,
-      selectedDirection
+      selectedPath,
+      selectedDirection: selectedDirectionValue
     }
 
     debug('store state in memory', stateId, sortModalStates[stateId])
@@ -108,7 +110,9 @@
                 showChevron
                 placeholder={$t('pleaseSelect')}
                 items={properties}
-                bind:value={selectedProperty}
+                value={selectedProperty}
+                on:input={(event) => (selectedPath = event.detail?.value)}
+                on:clear={() => (selectedPath = undefined)}
               />
             </td>
           </tr>
@@ -120,7 +124,8 @@
               showChevron
               clearable={false}
               items={directions}
-              bind:value={selectedDirection}
+              value={selectedDirection}
+              on:input={(event) => (selectedDirectionValue = event.detail?.value)}
             />
           </td>
         </tr>
