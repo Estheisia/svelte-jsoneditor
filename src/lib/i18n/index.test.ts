@@ -2,7 +2,7 @@ import { test, describe, afterEach } from 'vitest'
 import assert from 'assert'
 import { get } from 'svelte/store'
 import { setI18nData, t, tString } from './index.js'
-import { english, french, russian } from './locales/index.js'
+import { english, french, russian, simplifiedChinese } from './locales/index.js'
 import type { Language } from '$lib/types'
 
 describe('i18n', () => {
@@ -52,7 +52,7 @@ describe('i18n', () => {
   test('should define the same keys in every language', () => {
     const expected = Object.keys(english.values).sort()
 
-    for (const language of [french, russian]) {
+    for (const language of [french, russian, simplifiedChinese]) {
       assert.deepStrictEqual(Object.keys(language.values).sort(), expected, language.langCode)
     }
   })

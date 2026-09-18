@@ -1078,7 +1078,7 @@ When updating CSS variables dynamically, it is necessary to refresh the via `edi
 
 ## Language (i18n)
 
-All texts of the user interface can be translated. The library ships with the languages `english` (default), `french`, and `russian`. They are published in a separate entry point so your application only bundles the languages that it imports:
+All texts of the user interface can be translated. The library ships with the languages `english` (default), `french`, `russian`, and `simplifiedChinese`. They are published in a separate entry point so your application only bundles the languages that it imports:
 
 ```js
 import { JSONEditor } from 'svelte-jsoneditor'

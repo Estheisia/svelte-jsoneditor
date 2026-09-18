@@ -1,9 +1,9 @@
 <script lang="ts">
   import { JSONEditor } from 'svelte-jsoneditor'
-  import { english, french, russian } from 'svelte-jsoneditor/locales'
+  import { english, french, russian, simplifiedChinese } from 'svelte-jsoneditor/locales'
   import type { Language } from 'svelte-jsoneditor'
 
-  const languages: Language[] = [english, french, russian]
+  const languages: Language[] = [english, french, russian, simplifiedChinese]
 
   let selectedLanguage = $state(languages[0])
 
@@ -31,8 +31,9 @@
 
 <p>
   Pass a <code>Language</code> to the <code>language</code> property to translate the user
-  interface. The library ships with <code>english</code>, <code>french</code> and
-  <code>russian</code>, and you can pass a custom
+  interface. The library ships with <code>english</code>, <code>french</code>, <code>russian</code>
+  and
+  <code>simplifiedChinese</code>, and you can pass a custom
   <code>Language</code> of your own.
 </p>
 
